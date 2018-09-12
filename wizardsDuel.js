@@ -4,7 +4,7 @@ game.setBackground("floor.png");
 class PlayerWizard extends Sprite {
     constructor() {
         super();
-        this.name = ("MarcusTheWizard");
+        this.name = "MarcusTheWizard";
         this.setImage("marcusSheet.png");
         this.width = 48;
         this.height = 48;
@@ -13,6 +13,7 @@ class PlayerWizard extends Sprite {
         this.defineAnimation("down", 6, 8);
         this.speedWhenWalking = 100;
         this.defineAnimation("up", 0, 2);
+        this.defineAnimation("right", 3, 5);
 
     }
     handleGameLoop() {
@@ -31,15 +32,17 @@ class PlayerWizard extends Sprite {
         this.speed = this.speedWhenWalking;
         this.angle = 90;
     }
-    handleSpaceBar() {
+    handleSpacebar() {
         let spell = new Spell();
         spell.x = this.x;
         // sets the position of the spell object equal to
         spell.y = this.y;
         // the position of any object created from the PlayerWizard class
-        this.name = "A spell cast by Marcus";
-        this.setImage("marcusSpellSheet.png");
-        this.angle = 0;
+        spell.name = "A spell cast by Marcus";
+        spell.setImage("marcusSpellSheet.png");
+        spell.angle = 0;
+        this.playAnimation("right");
+        spell.x = this.x + this.width;
     }
 }
 
@@ -47,11 +50,16 @@ let marcus = new PlayerWizard();
 
 class Spell extends Sprite {
     constructor() {
+        super();
         this.speed = 200;
         this.width = 48;
         this.height = 48;
         this.defineAnimation("magic", 0, 7);
         this.playAnimation("magic", true);
 
+    }
+    handleBoundryContact() {
+        // Delete spell when it leaves display area
+        game.removeSprite(this);
     }
 }
