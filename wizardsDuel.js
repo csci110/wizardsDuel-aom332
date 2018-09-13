@@ -63,3 +63,22 @@ class Spell extends Sprite {
         game.removeSprite(this);
     }
 }
+
+class NonPlayerWizard extends Sprite {
+    constructor() {
+        super();
+        this.name = "The mysterious stranger";
+        this.setImage("strangerSheet.png");
+        this.width = 48;
+        this.height = 48;
+        this.x = game.displayWidth - 2 * this.width;
+        this.y = this.height;
+        this.angle = 270;
+        this.speed = 150;
+        this.defineAnimation("up", 0,2);
+        this.defineAnimation("down", 6, 8);
+        this.defineAnimation("left", 9, 11);
+        this.playAnimation("down");
+        
+    }
+}
