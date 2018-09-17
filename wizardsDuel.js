@@ -62,15 +62,16 @@ class Spell extends Sprite {
         game.removeSprite(this);
     }
     handleCollision(otherSprite) {
-        game.removeSprite(this);
-        new Fireball(otherSprite);
-        return false;
-
         // Compare images so Stranger's spells don't destroy each other.
-        if (this.getImage("marcusSpellSheet.png") !== otherSprite.getImage("strangerSheet.png")) {
-            game.removeSprite(this);
-            new Fireball(otherSprite);
+        if (this.getImage() !== otherSprite.getImage()) {
+            // Adjust mostly blank spell image to vertical center.
+            let verticalOffset = Math.abs(this.y - otherSprite.y);
+            if (verticalOffset < this.height / 2) {
+                game.removeSprite(this);
+                new Fireball(otherSprite);
+            }
         }
+        return false;
     }
 }
 
@@ -104,13 +105,6 @@ class NonPlayerWizard extends Sprite {
             this.angle = 90;
             this.playAnimation("up");
         }
-        // if (this.x === 90) {
-        //     this.playAnimation("up");
-
-        // }
-        // if (this.y === 270) {
-        //     this.PlayAnimation("down");
-        // }
     }
     handleAnimationEnd() {
         if (this.angle === 90) {
@@ -134,5 +128,11 @@ class Fireball extends Sprite {
         this.defineAnimation("explode", 0, 16);
         this.playAnimation("explode");
     }
-
+    handleAnimationEnd() {
+        game.removeSprite(this);
+        if (!game.isActiveSprite(stranger)) {
+            game.end("Congratulations!\n\nMarcus has defeated the mysterious" +
+                "\nstranger in the dark cloak!");
+        }
+    }
 }
