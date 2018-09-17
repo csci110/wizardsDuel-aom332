@@ -45,9 +45,6 @@ class PlayerWizard extends Sprite {
         spell.x = this.x + this.width;
     }
 }
-
-let marcus = new PlayerWizard();
-
 class Spell extends Sprite {
     constructor() {
         super();
@@ -71,8 +68,8 @@ class NonPlayerWizard extends Sprite {
         this.setImage("strangerSheet.png");
         this.width = 48;
         this.height = 48;
-        this.x = game.displayWidth - 2 * this.width;
-        this.y = this.height;
+        this.x === game.displayWidth - 2 * this.width;
+        this.y === this.height;
         this.angle = 270;
         this.speed = 150;
         this.defineAnimation("up", 0,2);
