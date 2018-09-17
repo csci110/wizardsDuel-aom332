@@ -45,6 +45,8 @@ class PlayerWizard extends Sprite {
         spell.x = this.x + this.width;
     }
 }
+let marcus = new PlayerWizard();
+
 class Spell extends Sprite {
     constructor() {
         super();
@@ -59,6 +61,17 @@ class Spell extends Sprite {
         // Delete spell when it leaves display area
         game.removeSprite(this);
     }
+    handleCollision(otherSprite) {
+        game.removeSprite(this);
+        new Fireball(otherSprite);
+        return false;
+
+        // Compare images so Stranger's spells don't destroy each other.
+        if (this.getImage("marcusSpellSheet.png") !== otherSprite.getImage("strangerSheet.png")) {
+            game.removeSprite(this);
+            new Fireball(otherSprite);
+        }
+    }
 }
 
 class NonPlayerWizard extends Sprite {
@@ -68,14 +81,58 @@ class NonPlayerWizard extends Sprite {
         this.setImage("strangerSheet.png");
         this.width = 48;
         this.height = 48;
-        this.x === game.displayWidth - 2 * this.width;
-        this.y === this.height;
+        this.x = game.displayWidth - 2 * this.width;
+        this.y = this.height;
         this.angle = 270;
+        this.defineAnimation("up", 0, 2);
         this.speed = 150;
-        this.defineAnimation("up", 0,2);
         this.defineAnimation("down", 6, 8);
         this.defineAnimation("left", 9, 11);
         this.playAnimation("down");
-        
     }
+    handleGameLoop() {
+        if (this.y <= 0) {
+            // Upward motion has reached top, so turn down
+            this.y = 0;
+            this.angle = 270;
+            this.playAnimation("down");
+
+        }
+        if (this.y >= game.displayHeight - this.height) {
+            // Downward motion has reached bottom, so turn up
+            this.y = game.displayHeight - this.height;
+            this.angle = 90;
+            this.playAnimation("up");
+        }
+        // if (this.x === 90) {
+        //     this.playAnimation("up");
+
+        // }
+        // if (this.y === 270) {
+        //     this.PlayAnimation("down");
+        // }
+    }
+    handleAnimationEnd() {
+        if (this.angle === 90) {
+            this.playAnimation("up");
+        }
+        if (this.angle === 270) {
+            this.playAnimation("down");
+        }
+    }
+}
+let stranger = new NonPlayerWizard();
+
+class Fireball extends Sprite {
+    constructor(deadSprite) {
+        super();
+        this.x = deadSprite.x;
+        this.y = deadSprite.y;
+        this.setImage("fireballSheet.png");
+        this.name = ("A ball of fire");
+        this.deadSprite = game.removeSprite(deadSprite);
+        this.defineAnimation("explode", 0, 16);
+        this.playAnimation("explode");
+    }
+
 }
