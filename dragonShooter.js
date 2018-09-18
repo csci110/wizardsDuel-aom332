@@ -108,7 +108,7 @@ class NonPlayerWizard extends Sprite {
         let spell = new Spell();
         spell.name = "A spell cast by Stranger";
         spell.x = 90;
-        spell.y = 180;
+        spell.y = 90;
 
         spell.setImage("strangerSpellSheet.png");
         spell.angle = 180;
