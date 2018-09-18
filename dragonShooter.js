@@ -1,19 +1,19 @@
 import { game, Sprite } from "./sgc/sgc.js";
-game.setBackground("floor.png");
+game.setBackground("dragonBackground.png");
 
 class PlayerWizard extends Sprite {
     constructor() {
         super();
-        this.name = "MarcusTheWizard";
-        this.setImage("marcusSheet.png");
+        this.name = "The Blue Eyed Dragon";
+        this.setImage("dragonSprite.png");
         this.width = 48;
         this.height = 48;
         this.x = this.width;
         this.y = this.y;
-        this.defineAnimation("down", 6, 8);
+        this.defineAnimation("down");
         this.speedWhenWalking = 100;
-        this.defineAnimation("up", 0, 2);
-        this.defineAnimation("right", 3, 5);
+        this.defineAnimation("up");
+        this.defineAnimation("right");
 
     }
     handleGameLoop() {
@@ -38,14 +38,14 @@ class PlayerWizard extends Sprite {
         // sets the position of the spell object equal to
         spell.y = this.y;
         // the position of any object created from the PlayerWizard class
-        spell.name = "A spell cast by Marcus";
-        spell.setImage("marcusSpellSheet.png");
+        spell.name = "A spell cast by Dragon";
+        spell.setImage("dragonSpellSheet.png");
         spell.angle = 0;
         this.playAnimation("right");
         spell.x = this.x + this.width;
     }
 }
-let marcus = new PlayerWizard();
+let dragon = new PlayerWizard();
 
 class Spell extends Sprite {
     constructor() {
@@ -145,7 +145,7 @@ class Fireball extends Sprite {
                 "\nstranger in the dark cloak!");
         }
         game.removeSprite(this);
-        if (!game.isActiveSprite(marcus)) {
+        if (!game.isActiveSprite(dragon)) {
             game.end("Marcus is defeated by the mysterious\nstranger in the dark cloak!\n\nBetter luck next time.");
         }
     }
