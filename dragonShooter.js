@@ -107,13 +107,12 @@ class NonPlayerWizard extends Sprite {
         }
         let spell = new Spell();
         spell.name = "A spell cast by Stranger";
-        spell.x = 90;
-        spell.y = 90;
+         spell.x = this.x + this.width;
+        spell.y = 0;
 
         spell.setImage("strangerSpellSheet.png");
         spell.angle = 180;
         this.playAnimation("left");
-        spell.x = this.x + this.width;
 
     }
     handleAnimationEnd() {
