@@ -105,6 +105,16 @@ class NonPlayerWizard extends Sprite {
             this.angle = 90;
             this.playAnimation("up");
         }
+        let spell = new Spell();
+        spell.name = "A spell cast by Stranger";
+        spell.x = 90;
+        spell.y = 180;
+
+        spell.setImage("strangerSpellSheet.png");
+        spell.angle = 180;
+        this.playAnimation("left");
+        spell.x = this.x + this.width;
+
     }
     handleAnimationEnd() {
         if (this.angle === 90) {
@@ -133,6 +143,10 @@ class Fireball extends Sprite {
         if (!game.isActiveSprite(stranger)) {
             game.end("Congratulations!\n\nMarcus has defeated the mysterious" +
                 "\nstranger in the dark cloak!");
+        }
+        game.removeSprite(this);
+        if (!game.isActiveSprite(marcus)) {
+            game.end("Marcus is defeated by the mysterious\nstranger in the dark cloak!\n\nBetter luck next time.");
         }
     }
 }
