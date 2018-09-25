@@ -15,6 +15,8 @@ class PlayerWizard extends Sprite {
         this.defineAnimation("up", 0, 2);
         this.defineAnimation("right", 3, 5);
 
+        this.spellCastTime = 0;
+
     }
     handleGameLoop() {
         this.y = Math.max(5, this.y);
@@ -33,6 +35,8 @@ class PlayerWizard extends Sprite {
         this.angle = 90;
     }
     handleSpacebar() {
+        let now = game.getTime();
+        // get the number of seconds since game start
         let spell = new Spell();
         spell.x = this.x;
         // sets the position of the spell object equal to
@@ -43,6 +47,14 @@ class PlayerWizard extends Sprite {
         spell.angle = 0;
         this.playAnimation("right");
         spell.x = this.x + this.width;
+        
+        // if the current time is 2 or more seconds greater than the previous spellCastTime 
+if (now - this.spellCastTime >= 2) { 
+       // reset the timer                               
+       this.spellCastTime = now;
+       // and cast a spell 
+       // insert the rest of your spell-generating code here
+ }           
     }
 }
 let marcus = new PlayerWizard();
@@ -105,16 +117,21 @@ class NonPlayerWizard extends Sprite {
             this.angle = 90;
             this.playAnimation("up");
         }
-        let spell = new Spell();
-        spell.name = "A spell cast by Stranger";
-        spell.x = this.x - this.width;
-        spell.y = this.y;
+        if (Math.random() < 0.01) {
+            // creat a spell object 48 pixels to the left of this object
+            // make it to go left, give it a name ad an image
+            // play the left animation
 
-        spell.setImage("strangerSpellSheet.png");
-        spell.angle = 180;
-        this.playAnimation("left");
+            let spell = new Spell();
+            spell.name = "A spell cast by Stranger";
+            spell.x = this.x - this.width;
+            spell.y = this.y;
 
+            spell.setImage("strangerSpellSheet.png");
+            spell.angle = 180;
+            this.playAnimation("left");
 
+        }
     }
     handleAnimationEnd() {
         if (this.angle === 90) {
